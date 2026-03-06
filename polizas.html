@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pólizas - Prudential</title>
+  <link rel="stylesheet" href="../components/navbar.css" />
+  <style>
+    :root {
+      --page-bg: #f6f6f6;
+      --text-dark: #4f4f4f;
+      --text-muted: #7f8d96;
+      --line: #d8d8d8;
+      --field-border: #bbbbbb;
+      --field-bg: #f7f7f7;
+      --brand-blue: #0f79ab;
+      --brand-blue-dark: #005a84;
+      --button-dark: #005a84;
+      --button-light: #0f79ab;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff;
+      color: var(--text-dark);
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      background: var(--page-bg);
+    }
+
+    .page-shell {
+      width: 100%;
+      padding: 12px 23px 0 23px;
+    }
+
+    .breadcrumb {
+      margin: 0 0 16px 32px;
+      font-size: 8px;
+      line-height: 1.2;
+      color: #67808b;
+      text-transform: uppercase;
+      letter-spacing: 0.1px;
+    }
+
+    .breadcrumb a,
+    .breadcrumb span {
+      color: #67808b;
+      text-decoration: none;
+      margin-right: 3px;
+    }
+
+    .filters-area {
+      margin-left: 34px;
+      margin-right: 30px;
+    }
+
+    .search-banner {
+      width: 249px;
+      height: 22px;
+      margin-left: auto;
+      background: var(--brand-blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .search-banner .chev {
+      font-size: 14px;
+      line-height: 1;
+      transform: translateY(-1px);
+    }
+
+    .filters-grid {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 244px 244px 243px 243px;
+      column-gap: 15px;
+      row-gap: 10px;
+      align-items: end;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field label {
+      display: block;
+      margin: 0 0 3px;
+      font-size: 7px;
+      line-height: 1.2;
+      color: #5c5c5c;
+      font-weight: 700;
+    }
+
+    .control,
+    .select,
+    .date-control {
+      width: 100%;
+      height: 24px;
+      border: 1px solid var(--field-border);
+      background: #f7f7f7;
+      color: #7f8d96;
+      font-size: 11px;
+      padding: 0 10px;
+      outline: none;
+    }
+
+    .control::placeholder,
+    .select,
+    .date-control input::placeholder {
+      color: #7f8d96;
+    }
+
+    .date-wrap,
+    .select-wrap {
+      position: relative;
+    }
+
+    .date-control {
+      padding-right: 26px;
+    }
+
+    .date-icon,
+    .select-icon {
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #737373;
+      font-size: 10px;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .button-row {
+      display: contents;
+    }
+
+    .action-btn {
+      width: 100%;
+      height: 22px;
+      border: 1px solid rgba(0,0,0,0.12);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .action-btn.filter {
+      background: var(--button-dark);
+    }
+
+    .action-btn.clear {
+      background: var(--button-light);
+    }
+
+    .table-zone {
+      margin: 30px 1px 0 1px;
+      background: transparent;
+    }
+
+    .export-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+      padding-right: 10px;
+      margin-bottom: 2px;
+    }
+
+    .export-icon {
+      width: 18px;
+      height: 24px;
+      border: 1px solid #d4d4d4;
+      background: linear-gradient(#fff, #f2f2f2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #c94a47;
+    }
+
+    .export-icon.excel {
+      color: #2c9b45;
+    }
+
+    .table-shell {
+      border: 1px solid #e1e1e1;
+      background: #fff;
+      min-height: 297px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    thead th {
+      height: 18px;
+      border-right: 1px solid #e3e3e3;
+      border-bottom: 1px solid #e3e3e3;
+      background: #f9f9f9;
+      color: #313131;
+      font-size: 7px;
+      font-weight: 700;
+      text-align: center;
+      padding: 0 4px;
+      white-space: nowrap;
+    }
+
+    thead th:last-child {
+      border-right: none;
+    }
+
+    tbody td {
+      height: 228px;
+      border-bottom: 1px solid transparent;
+      background: #fff;
+    }
+
+    .table-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 12px 10px;
+      font-size: 8px;
+      color: #7c8d96;
+    }
+
+    .footer-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .footer-group select {
+      height: 14px;
+      border: none;
+      background: transparent;
+      font-size: 8px;
+      color: #4f4f4f;
+      padding: 0 10px 0 0;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, #7c8d96 50%), linear-gradient(135deg, #7c8d96 50%, transparent 50%);
+      background-position: calc(100% - 7px) 5px, calc(100% - 3px) 5px;
+      background-size: 4px 4px, 4px 4px;
+      background-repeat: no-repeat;
+      width: 26px;
+      outline: none;
+    }
+
+    .pager {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: #b7b7b7;
+      font-size: 13px;
+      user-select: none;
+    }
+
+    .pager span {
+      line-height: 1;
+    }
+
+    @media (max-width: 1280px) {
+      .filters-grid {
+        grid-template-columns: repeat(2, minmax(240px, 1fr));
+      }
+
+      .search-banner {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-shell {
+        padding: 12px;
+      }
+
+      .breadcrumb,
+      .filters-area {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .filters-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .table-zone {
+        overflow-x: auto;
+      }
+
+      .table-shell {
+        min-width: 1000px;
+      }
+    }
+  </style>
+</head>
+<body data-nav="consultas">
+  <main class="page">
+    <div id="navbar-container"></div>
+
+    <div class="page-shell">
+      <div class="breadcrumb">
+        <a href="dashboard.html">INICIO</a> &gt;
+        <a href="#">CONSULTAS</a> &gt;
+        <span>PÓLIZAS</span>
+      </div>
+
+      <section class="filters-area">
+        <div class="search-banner">
+          <span class="chev">›</span>
+          <span>Búsqueda Avanzada</span>
+        </div>
+
+        <div class="filters-grid">
+          <div class="field">
+            <label for="contratante">Contratante</label>
+            <input id="contratante" class="control" type="text" />
+          </div>
+
+          <div class="field">
+            <label for="asegurado">Asegurado</label>
+            <input id="asegurado" class="control" type="text" />
+          </div>
+
+          <div class="field">
+            <label for="numero-poliza">Número de Póliza</label>
+            <input id="numero-poliza" class="control" type="text" value="998010232" />
+          </div>
+
+          <div class="field">
+            <label for="solicitud">Solicitud</label>
+            <input id="solicitud" class="control" type="text" />
+          </div>
+
+          <div class="field">
+            <label for="fecha-vencimiento">Fecha Próximo Vencimiento</label>
+            <div class="date-wrap">
+              <input id="fecha-vencimiento" class="date-control" type="text" placeholder="dd/mm/aaaa" />
+              <span class="date-icon">◫</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="estatus">Estatus De La Póliza</label>
+            <div class="select-wrap">
+              <select id="estatus" class="select">
+                <option selected>Estatus</option>
+              </select>
+              <span class="select-icon">▾</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="moneda">Moneda</label>
+            <div class="select-wrap">
+              <select id="moneda" class="select">
+                <option selected>Moneda</option>
+              </select>
+              <span class="select-icon">▾</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="medio-cobro">Medio de Cobro</label>
+            <div class="select-wrap">
+              <select id="medio-cobro" class="select">
+                <option selected>Medio de Cobro</option>
+              </select>
+              <span class="select-icon">▾</span>
+            </div>
+          </div>
+
+          <div></div>
+          <div></div>
+
+          <div class="field">
+            <button class="action-btn filter" type="button">Aplicar filtro</button>
+          </div>
+
+          <div class="field">
+            <button class="action-btn clear" type="button">Limpiar</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="table-zone">
+        <div class="export-row">
+          <span class="export-icon">📄</span>
+          <span class="export-icon excel">✕</span>
+        </div>
+
+        <div class="table-shell">
+          <table>
+            <colgroup>
+              <col style="width: 53px;" />
+              <col style="width: 52px;" />
+              <col style="width: 204px;" />
+              <col style="width: 205px;" />
+              <col style="width: 81px;" />
+              <col style="width: 104px;" />
+              <col style="width: 105px;" />
+              <col style="width: 100px;" />
+              <col style="width: 103px;" />
+              <col style="width: 45px;" />
+              <col style="width: 31px;" />
+              <col style="width: 24px;" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Póliza</th>
+                <th>Solicitud</th>
+                <th>Contratante</th>
+                <th>Asegurado</th>
+                <th>Agente</th>
+                <th>Tel. Celular</th>
+                <th>Tel. Oficina</th>
+                <th>Prima Anual</th>
+                <th>Moneda</th>
+                <th>Estatus</th>
+                <th>Mes</th>
+                <th>Día</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="12"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="table-footer">
+            <div class="footer-group">
+              <span>Registros por Página</span>
+              <select>
+                <option selected>5</option>
+              </select>
+            </div>
+
+            <div class="footer-group">
+              <span>0-0 de 0</span>
+            </div>
+
+            <div class="pager" aria-label="Paginación">
+              <span>|‹</span>
+              <span>‹</span>
+              <span>›</span>
+              <span>›|</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const container = document.getElementById("navbar-container");
+      if (!container) return;
+
+      try {
+        const response = await fetch("../components/navbar.html");
+        const html = await response.text();
+        container.innerHTML = html;
+
+        const activeItem = document.body.dataset.nav;
+        if (activeItem) {
+          const activeNode = container.querySelector(`.nav-item[data-nav="${activeItem}"]`);
+          if (activeNode) activeNode.classList.add("active");
+        }
+      } catch (error) {
+        console.error("Error loading navbar:", error);
+      }
+    });
+  </script>
+</body>
+</html>

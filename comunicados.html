@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comunicados - Prudential</title>
+  <link rel="stylesheet" href="../components/navbar.css" />
+  <style>
+    :root {
+      --page-bg: #f5f5f5;
+      --crumb-blue: #0c67a6;
+      --text-dark: #18344a;
+      --card-border: #d8d8d8;
+      --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+      --btn-blue: #0d6ea8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text-dark);
+    }
+
+    .page {
+      min-height: 100vh;
+      background: var(--page-bg);
+    }
+
+    .content {
+      width: 100%;
+      padding: 41px 77px 40px 71px;
+    }
+
+    .breadcrumb {
+      margin: 0 0 39px;
+      font-size: 15px;
+      line-height: 1.2;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .breadcrumb a,
+    .breadcrumb span {
+      text-decoration: none;
+      color: #333;
+    }
+
+    .breadcrumb a:first-child {
+      color: var(--crumb-blue);
+    }
+
+    .breadcrumb .sep {
+      display: inline-block;
+      margin: 0 10px 0 8px;
+      color: #8a8a8a;
+      transform: translateY(-1px);
+    }
+
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .notice-card {
+      position: relative;
+      min-height: 287px;
+      background: #fff;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow);
+      padding: 118px 38px 34px 38px;
+    }
+
+    .notice-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 400;
+      color: #005b9a;
+      letter-spacing: 0.1px;
+      max-width: 1100px;
+    }
+
+    .notice-action {
+      position: absolute;
+      right: 235px;
+      bottom: 16px;
+      width: 105px;
+      height: 52px;
+      border: none;
+      background: var(--btn-blue);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 18px;
+      font-weight: 400;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .notice-action .icon {
+      font-size: 19px;
+      line-height: 1;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 1400px) {
+      .content {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      .notice-action {
+        right: 120px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .content {
+        padding: 32px 24px;
+      }
+
+      .notice-card {
+        min-height: 230px;
+        padding-top: 90px;
+      }
+
+      .notice-title {
+        font-size: 18px;
+      }
+
+      .notice-action {
+        right: 40px;
+        width: 92px;
+        height: 46px;
+        font-size: 17px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .breadcrumb {
+        font-size: 13px;
+      }
+
+      .notice-card {
+        min-height: 210px;
+        padding: 70px 20px 90px;
+      }
+
+      .notice-title {
+        font-size: 17px;
+      }
+
+      .notice-action {
+        right: 20px;
+        bottom: 20px;
+        width: 84px;
+        height: 42px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body data-nav="mi-prudential">
+  <main class="page">
+    <div id="navbar-container"></div>
+
+    <div class="content">
+      <div class="breadcrumb">
+        <a href="dashboard.html">INICIO</a><span class="sep">›</span><span>MI PRUDENTIAL</span><span class="sep">›</span><span>COMUNICADOS</span>
+      </div>
+
+      <section class="cards">
+        <article class="notice-card">
+          <h2 class="notice-title">04 03 26 NI: Confirmación del medio de cobro-Tarjetas de crédito o débito</h2>
+          <a class="notice-action" href="#">
+            <span class="icon">⬇</span>
+            <span>Ver</span>
+          </a>
+        </article>
+
+        <article class="notice-card">
+          <h2 class="notice-title">03 03 26 NI: Actualización de los Medios de Cobro</h2>
+          <a class="notice-action" href="#">
+            <span class="icon">⬇</span>
+            <span>Ver</span>
+          </a>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const container = document.getElementById("navbar-container");
+      if (!container) return;
+
+      try {
+        const response = await fetch("../components/navbar.html");
+        const html = await response.text();
+        container.innerHTML = html;
+
+        const activeItem = document.body.dataset.nav;
+        if (activeItem) {
+          const activeNode = container.querySelector(`.nav-item[data-nav="${activeItem}"]`);
+          if (activeNode) activeNode.classList.add("active");
+        }
+      } catch (error) {
+        console.error("Error loading navbar:", error);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,19 +1,68 @@
 <div class="utility-bar">
-  Dólar 19.83 | UDI 8.8443 | 2025-03-18 &nbsp;&nbsp; Bienvenido - EDUARDO RICO
+  <div class="utility-bar__inner">
+    <span>Dólar 19.83</span>
+    <span>|</span>
+    <span>UDI 8.8443</span>
+    <span>|</span>
+    <span>2025-03-18</span>
+    <span>|</span>
+    <span>Bienvenido - EDUARDO RICO</span>
+    <span class="utility-icon">◻</span>
+  </div>
 </div>
 
 <header class="main-nav">
-  <img class="logo" src="../assets/pru-logo.png" alt="Prudential" />
-  <nav class="nav-links" aria-label="Principal">
-    <a href="#" data-nav="mi-prudential">Mi Prudential</a>
-    <a href="#" data-nav="consultas">Consultas</a>
-    <a href="#" data-nav="cotizador">Cotizador</a>
-    <a href="#" data-nav="pagos">Pagos</a>
-    <a href="#" data-nav="redi">REDI</a>
-    <a href="#" data-nav="administracion">Administración</a>
-    <a href="#" data-nav="tableros">Tableros</a>
-    <a href="#" data-nav="compensaciones">Compensaciones</a>
-    <a href="#" data-nav="herramientas">Herramientas</a>
-    <a href="#" data-nav="gestion-poliza">Gestión de Póliza</a>
-  </nav>
+  <div class="main-nav__inner">
+    <a class="brand" href="dashboard.html" aria-label="Prudential">
+      <img class="logo" src="../assets/pru-logo.png" alt="Prudential" />
+    </a>
+
+    <nav class="nav-links" aria-label="Principal">
+      <div class="nav-item has-dropdown" data-nav="mi-prudential">
+        <a href="dashboard.html" class="nav-link">Mi Prudential</a>
+        <div class="dropdown-menu">
+          <a href="comunicados.html">Comunicados</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-dropdown" data-nav="consultas">
+        <a href="#" class="nav-link">Consultas</a>
+        <div class="dropdown-menu">
+          <a href="polizas.html">Pólizas</a>
+        </div>
+      </div>
+
+      <div class="nav-item" data-nav="cotizador">
+        <a href="#" class="nav-link">Cotizador</a>
+      </div>
+
+      <div class="nav-item" data-nav="pagos">
+        <a href="#" class="nav-link">Pagos</a>
+      </div>
+
+      <div class="nav-item" data-nav="redi">
+        <a href="#" class="nav-link">REDI</a>
+      </div>
+
+      <div class="nav-item" data-nav="administracion">
+        <a href="#" class="nav-link">Administración</a>
+      </div>
+
+      <div class="nav-item" data-nav="tableros">
+        <a href="#" class="nav-link">Tableros</a>
+      </div>
+
+      <div class="nav-item" data-nav="compensaciones">
+        <a href="#" class="nav-link">Compensaciones</a>
+      </div>
+
+      <div class="nav-item" data-nav="herramientas">
+        <a href="#" class="nav-link">Herramientas</a>
+      </div>
+
+      <div class="nav-item" data-nav="gestion-poliza">
+        <ahref="#" class="nav-link">Gestión de Póliza</a>
+      </div>
+    </nav>
+  </div>
 </header>
