@@ -143,8 +143,9 @@
                     rgba(0, 40, 91, 0.03) 36%,
                     rgba(0, 40, 91, 0.00) 46%),
                 url("./assets/dashboard.png");
-            background-size: contain;
+            background-size: cover;
             background-position: center center;
+            background-repeat: no-repeat;
         }
 
         .hero-right::after {
@@ -373,45 +374,52 @@
         </div>
     </main>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            const container = document.getElementById("navbar-container");
-            if (!container) return;
+  <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.getElementById("navbar-container");
+    if (!container) return;
 
-            try {
-                const response = await fetch("./components/navbar.html");
-                const html = await response.text();
-                container.innerHTML = html;
+    try {
+      const response = await fetch("./components/navbar.html");
+      const html = await response.text();
+      container.innerHTML = html;
 
-                const activeItem = document.body.dataset.nav;
-                if (activeItem) {
-                    const activeLink = container.querySelector(`[data-nav="${activeItem}"]`);
-                    if (activeLink) activeLink.classList.add("active");
-                }
-            } catch (error) {
-                console.error("Error loading navbar:", error);
-            }
-        });
-    </script>
-    <script>
-  document.addEventListener("DOMContentLoaded", () => {
+      const activeItem = document.body.dataset.nav;
+      if (activeItem) {
+        const activeLink = container.querySelector(`[data-nav="${activeItem}"]`);
+        if (activeLink) activeLink.classList.add("active");
+      }
+
+      initMobileNavbar();
+    } catch (error) {
+      console.error("Error loading navbar:", error);
+    }
+  });
+
+  function initMobileNavbar() {
     const mainNav = document.querySelector(".main-nav");
     const toggle = document.querySelector(".nav-toggle");
     const dropdownParents = document.querySelectorAll(".nav-item.has-dropdown");
 
-    if (toggle && mainNav) {
-      toggle.addEventListener("click", () => {
-        const isOpen = mainNav.classList.toggle("menu-open");
-        toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      });
-    }
+    if (!mainNav || !toggle) return;
+
+    toggle.addEventListener("click", () => {
+      const isOpen = mainNav.classList.toggle("menu-open");
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
 
     dropdownParents.forEach((item) => {
       const link = item.querySelector(".nav-link");
+      if (!link) return;
 
       link.addEventListener("click", (e) => {
         if (window.innerWidth <= 1100) {
           e.preventDefault();
+
+          dropdownParents.forEach((otherItem) => {
+            if (otherItem !== item) otherItem.classList.remove("open");
+          });
+
           item.classList.toggle("open");
         }
       });
@@ -419,12 +427,12 @@
 
     window.addEventListener("resize", () => {
       if (window.innerWidth > 1100) {
-        mainNav?.classList.remove("menu-open");
+        mainNav.classList.remove("menu-open");
         dropdownParents.forEach((item) => item.classList.remove("open"));
-        toggle?.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-expanded", "false");
       }
     });
-  });
+  }
 </script>
 </body>
 
